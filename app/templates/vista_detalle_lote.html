@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Lote {{ lote.nombre }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='detalle.css') }}">
+</head>
+<body>
+    
+    <a href="{{ url_for('main.dashboard') }}" class="back-arrow">
+        <img src="{{ url_for('static', filename='img/Arrow.png') }}" alt="Volver">
+    </a>    
+    <h2 class="titulo-lote">Detalle del Lote <strong>{{ lote.nombre }}</strong></h2>
+
+    <div class="tareas-container">
+        {% for tarea in tareas %}
+        <div class="tarea-container">
+            <h3 class="titulo-quimico">🧪 <strong>{{ tarea.quimico_rel.nombre_comercial }}</strong></h3>
+            <div class="tarea-info">
+                <div class="info-box">
+                    <div class="info-label"><strong>Fundo</strong></div>
+                    <div class="info-value">: {{ tarea.lote.fundo_rel.nombre }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label"><strong>Cultivo</strong></div>
+                    <div class="info-value">: {{ tarea.lote.cultivo_rel.nombre }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label"><strong>Fenología</strong></div>
+                    <div class="info-value">: {{ tarea.quimico_rel.fenologia }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label"><strong>Fecha programada</strong></div>
+                    <div class="info-value">: {{ tarea.fecha_programada.strftime('%d/%m/%Y') }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label"><strong>Denominación Ing. Activo</strong></div>
+                    <div class="info-value">: {{ tarea.quimico_rel.denominacion_ing_activo }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label"><strong>Objetivo</strong></div>
+                    <div class="info-value">: {{ tarea.quimico_rel.objetivo }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label"><strong>Dosis x Cilindro</strong></div>
+                    <div class="info-value">: {{ tarea.quimico_rel.dosis_cilindro }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label"><strong>Dosis x Hectárea</strong></div>
+                    <div class="info-value">: {{ tarea.quimico_rel.dosis_hectarea }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label"><strong>Volumen</strong></div>
+                    <div class="info-value">: {{ tarea.quimico_rel.volumen }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label"><strong>Observación</strong></div>
+                    <div class="info-value">:</div>
+                </div>
+                <form action="{{ url_for('main.completar_tarea', tarea_id=tarea.id) }}" method="POST">
+                    <textarea name="observacion" rows="3" placeholder="Ingrese observaciones"></textarea>
+                    {% if tarea.estado == "Pendiente" %}
+                        <button type="submit" class="btn-realizar">Tarea Realizada</button>
+                    {% else %}
+                        <button type="button" class="btn-completado" disabled>Tarea Completada</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
+
+

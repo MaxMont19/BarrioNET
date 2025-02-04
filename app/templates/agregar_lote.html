@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Lote</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='agregar_editar.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('main.dashboard') }}" class="back-arrow">
+        <img src="{{ url_for('static', filename='img/Arrow.png') }}" alt="Volver">
+    </a> 
+    <div class="form-container">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            <label for="nombre">{{ form.nombre.label }}</label>
+            {{ form.nombre(class="form-control") }}
+        
+            <label for="fundo">{{ form.fundo.label }}</label>
+            {{ form.fundo(class="form-control") }}
+        
+            <label for="cultivo">{{ form.cultivo.label }}</label>
+            {{ form.cultivo(class="form-control") }}
+        
+            <label for="fecha_poda">{{ form.fecha_poda.label }}</label>
+            {{ form.fecha_poda(class="form-control") }}
+        
+            <button type="submit" class="btn-submit">Agregar</button>
+        </form>
+    </div>
+</body>
+
+</html>
+

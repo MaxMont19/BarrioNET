@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='historial.css') }}">
+    <script src="{{ url_for('static', filename='historial.js') }}" defer></script>
+</head>
+<body>
+    <div class="dashboard-container">
+
+        <!-- 🏠 SIDEBAR -->
+        <aside class="sidebar">
+            <h3>Bienvenido, {{ current_user.username }}</h3>
+
+            <!-- 📌 Menú de Navegación -->
+            <nav class="nav-menu">
+                <a href="{{ url_for('main.dashboard') }}" class="nav-btn">📌 Lotes</a>
+                <a href="{{ url_for('main.historial') }}" class="nav-btn active">📜 Historial</a>
+            </nav>
+
+            <div class="filters">
+                <h4>🌍 Filtrar por Fundo</h4>
+                <label><input type="checkbox" class="filter" data-filter="fundo" value="Jayanca"> 🌿 Jayanca</label>
+
+                <h4>🍃 Filtrar por Cultivo</h4>
+                <label><input type="checkbox" class="filter" data-filter="cultivo" value="Arandano"> 🍇 Arándano</label>
+                <label><input type="checkbox" class="filter" data-filter="cultivo" value="Esparrago"> 🥦 Espárrago</label>
+            </div>
+
+            <a href="{{ url_for('auth.logout') }}" class="btn-salir">Salir</a>
+        </aside>
+
+        <!-- 🔹 CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <header class="header-dashboard">
+                <h2>📜 Historial de Lotes</h2>
+                <a href="{{ url_for('main.descargar_historial_todos') }}" class="btn-descargar">📥 Descargar Todo</a>
+            </header>
+
+            
+            <!-- 📦 GALERÍA DE LOTES (HISTORIAL) -->
+<section class="contenedor-lotes">
+    <div class="lotes-grid">
+        {% for lote in lotes %}
+        <div class="lote-card"
+             data-fundo="{{ lote.fundo_rel.nombre.lower() }}"
+             data-cultivo="{{ lote.cultivo_rel.nombre.lower() }}">
+
+            <a href="{{ url_for('main.historial_lote', id_lote=lote.id) }}" class="lote-card-link"></a>
+            <div class="lote-info">
+                <h3 class="lote-nombre">Lote <strong>{{ lote.nombre }}</strong></h3>
+                <p class="ubicacion">📍 {{ lote.fundo_rel.nombre }}</p>
+                <p>🌱 <strong>Cultivo:</strong> {{ lote.cultivo_rel.nombre }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+        </main>
+    </div>
+</body>
+</html>

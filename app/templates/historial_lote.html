@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial del Lote</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='historial_2.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <main class="main-content">
+            <header class="header-dashboard">
+                <a href="{{ url_for('main.historial') }}" class="back-arrow">
+                    <img src="{{ url_for('static', filename='img/Arrow.png') }}" alt="Volver">
+                </a>
+                <h2>📜 Historial de Lote {{ lote.nombre }}</h2>
+                <a href="{{ url_for('main.descargar_historial', id_lote=lote.id) }}" class="btn-descargar">📥 Descargar</a>
+            </header>
+
+            <table class="historial-table">
+                <thead>
+                    <tr>
+                        <th>Nombre del Lote</th>
+                        <th>Fundo</th>
+                        <th>Fecha Programada</th>
+                        <th>Fecha Realizada</th>
+                        <th>Usuario</th>
+                        <th>Fenología</th>
+                        <th>Nombre Comercial</th>
+                        <th>Denominación Ing. Activo</th>
+                        <th>Objetivo</th>
+                        <th>Dosis x Cilindro</th>
+                        <th>Dosis x Hectárea</th>
+                        <th>Volumen</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registro in historial %}
+                    <tr>
+                        <td>{{ registro.nombre_lote }}</td>
+                        <td>{{ registro.fundo }}</td>
+                        <td>{{ registro.fecha_programada }}</td>
+                        <td>{{ registro.fecha_realizada }}</td>
+                        <td>{{ registro.usuario }}</td>  <!-- Se mostrará el usuario que completó la tarea -->
+                        <td>{{ registro.fenologia }}</td>
+                        <td>{{ registro.nombre_comercial }}</td>
+                        <td>{{ registro.denominacion_ing_activo }}</td>
+                        <td>{{ registro.objetivo }}</td>
+                        <td>{{ registro.dosis_cilindro }}</td>
+                        <td>{{ registro.dosis_hectarea }}</td>
+                        <td>{{ registro.volumen }}</td>
+                        <td>{{ registro.observacion }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
+    </div>
+</body>
+</html>
