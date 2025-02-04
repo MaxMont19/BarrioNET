@@ -1,5 +1,5 @@
 html, body {
-    overflow: hidden; /* Evita el scroll general */
+    
     height: 100%;
     margin: 0;
     padding: 0;
@@ -15,14 +15,6 @@ body {
 /* ======== CONTENEDOR PRINCIPAL ======== */
 .dashboard-container {
     display: flex;
-}
-
-/* ======== SIDEBAR ======== */
-.sidebar {
-    width: 250px;
-    background: #c7ddb2;
-    padding: 20px;
-    min-height: 100vh;
 }
 
 .sidebar h3 {
@@ -202,3 +194,101 @@ body {
 .btn-descargar:hover {
     background: #45a049;
 }
+
+@media screen and (max-width: 768px) {
+    body {
+        overflow-y: auto; /* Habilita el scroll vertical */
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Ajustar el contenedor principal */
+    .dashboard-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ocupar toda la pantalla */
+        height: auto; /* Ajustarse al contenido */
+    }
+
+    /* Ajustar la barra lateral (SIDEBAR) */
+    .sidebar {
+        width: 100%;
+        height: auto; /* Se ajusta automáticamente */
+        max-height: 60vh; /* Limita su altura al 40% de la pantalla */
+        padding-bottom: 10px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center; /* Evita espacios extra */
+    }
+
+    /* Reorganizar los botones en una sola fila */
+    .nav-menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        margin-bottom: 5px; /* Espaciado mínimo */
+    }
+
+    .nav-btn {
+        width: auto;
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+
+    /* Hacer que los filtros no ocupen demasiado espacio */
+    .filters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+        width: 100%;
+        margin-bottom: 5px; /* Reduce espacio sobrante */
+    }
+
+    .filters h4 {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Ajustar el contenido principal */
+    .main-content {
+        flex-grow: 1;
+        padding: 10px;
+        width: 100%;
+        overflow-y: auto; /* Permitir scroll en el contenido */
+        margin-top: 0; /* Elimina espacios arriba */
+    }
+
+    /* Ajustar la galería de lotes */
+    .lotes-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 10px; /* Ajustar espacio para mejor visualización */
+    }
+
+    .lote-card {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .lote-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .lote-info {
+        text-align: center;
+    }
+
+    /* Ajustar el botón de salida */
+    .btn-salir {
+        position: static;
+        margin-top: 10px;
+        width: 90%;
+    }
+}
+
+
