@@ -4,23 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='sesion.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
-    <div class="container">
-        <h2>Registro</h2>
-        <form method="POST">
-            {{ form.hidden_tag() }}
-            <label for="username">Nombre de Usuario</label>
-            {{ form.username() }}
-            <label for="password">Contraseña</label>
-            {{ form.password() }}
-            <label for="confirm_password">Confirmar Contraseña</label>
-            {{ form.confirm_password() }}
-            <button type="submit">Registrarse</button>
-        </form>
-        <p>¿Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Inicia sesión aquí</a></p>
+
+    <img src="{{ url_for('static', filename='img/LogoBarrioNet.png') }}" alt="Logo" class="logo-top-left">
+
+
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Registro</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                <label for="nombre">Nombre</label>
+                {{ form.nombre(class="input-field") }}
+
+                <label for="apellido">Apellido</label>
+                {{ form.apellido(class="input-field") }}
+
+                <label for="username">Nombre de Usuario</label>
+                {{ form.username(class="input-field") }}
+
+                <label for="email">Correo Electrónico</label>
+                {{ form.email(class="input-field") }}
+
+                <label for="distrito">Distrito</label>
+                {{ form.distrito(class="input-field") }}
+
+                <label for="foto_perfil">Foto de Perfil</label>
+                <div class="custom-file-upload">
+                    <input type="file" name="foto_perfil" id="foto_perfil" accept="image/*">
+                    <span id="nombre_archivo">Ningún archivo seleccionado</span>
+                </div>
+
+                <label for="password">Contraseña</label>
+                {{ form.password(class="input-field") }}
+
+                <label for="confirm_password">Confirmar Contraseña</label>
+                {{ form.confirm_password(class="input-field") }}
+
+                <button type="submit" class="login-btn">Registrarse</button>
+            </form>
+
+            <p>¿Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Inicia sesión aquí</a></p>
+        </div>
     </div>
+
 </body>
 </html>
-

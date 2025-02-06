@@ -24,11 +24,13 @@ def create_app():
     login_manager.init_app(app)
     migrate.init_app(app, db)
 
-    from app.auth import auth_bp
-    from app.routes import main_bp  # ❌ Eliminado calcular_fechas_programadas
+    # Ahora puedes usar la configuración correctamente
+    app.config['UPLOAD_FOLDER'] = Config.UPLOAD_FOLDER
 
+    from app.auth import auth_bp
+    from app.routes import home_bp  
+    app.register_blueprint(home_bp, url_prefix="/")
     app.register_blueprint(auth_bp, url_prefix="/auth")
-    app.register_blueprint(main_bp, url_prefix="/")
 
     return app
 

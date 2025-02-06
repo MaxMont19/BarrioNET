@@ -1,321 +1,87 @@
-html, body {
-    height: 100%;
+/* Establecer imagen de fondo */
+body {
+    background: url("../static/img/FondoBarrioNet.webp") no-repeat center center fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-}
-
-/* ======== ESTILOS GENERALES ======== */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f0;
-    margin: 0;
-}
-
-/* ======== CONTENEDOR PRINCIPAL ======== */
-.dashboard-container {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.sidebar h3 {
-    font-size: 20px;
-    margin-bottom: 15px;
+/* Contenedor principal */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Caja del formulario */
+.login-box {
+    background: rgba(255, 255, 255, 0.384);
+    padding: 30px;
+    border-radius: 15px;
     text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
 }
 
-/* Contenedor del menú */
-.nav-menu {
-    width: 100%;  /* Ajusta el ancho al 100% del contenedor padre */
-    display: flex;
-    flex-direction: column; /* Acomoda los elementos en columna */
-    align-items: center; /* Centra los elementos horizontalmente */
-    justify-content: center; /* Centra los elementos verticalmente si es necesario */
+/* LOGO EN LA PARTE SUPERIOR IZQUIERDA */
+.logo-top-left {
+    position: absolute;
+    top: 10px;  /* Ajusta la distancia desde la parte superior */
+    right: 20px; /* Ajusta la distancia desde la izquierda */
+    width: 350px; /* Ajusta el tamaño del logo */
+    height: auto; /* Mantiene la proporción */
+    z-index: 10; /* Asegura que esté por encima del fondo */
 }
 
-/* Botones de navegación */
-.nav-btn {
-    background: #e6f3d6;
+
+/* Campos de entrada */
+.input-field {
+    width: 100%;
     padding: 10px;
-    text-align: center;
-    text-decoration: none;
-    color: black;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    width: 80%; 
-    max-width: 200px; 
-    margin: 10px auto; 
-    display: block;
 }
 
-.nav-btn.active {
-    background: #b8d89c;
-    font-weight: bold;
-}
-
-/* Filtros */
-.filters h4 {
-    margin-top: 20px;
+/* Botón de inicio de sesión */
+.login-btn {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
     font-size: 16px;
 }
 
-.filters label {
-    display: block;
-    font-size: 14px;
-    margin-left: 10px;
+.login-btn:hover {
+    background-color: #ff5252;
 }
 
-/* Contenedor lateral */
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    background-color: #c8e6c9;
-    width: 250px;
-    height: 100vh; /* Cambiar esto si es necesario */
-    padding: 20px;
-    box-sizing: border-box;
-     /* Distribuye los elementos */
-}
-
-/* Contenedor de los filtros y navegación */
-.nav-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    flex-grow: 1; /* Permite que los filtros se expandan */
-}
-
-/* Botón de salida */
-.btn-salir {
-    display: block;
-    background: red;
-    color: white;
+/* Estilo para el botón de archivo */
+.custom-file-upload {
+    background: #eee;
     padding: 10px;
+    border-radius: 5px;
     text-align: center;
-    text-decoration: none;
-    border-radius: 5px;
-    width: 80%;
-    max-width: 150px;
-    position: absolute; 
-    bottom: 20px;
-    margin-left: 20px;
+    margin-bottom: 10px;
 }
 
-/* ======== CONTENIDO PRINCIPAL ======== */
-.main-content {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
+.custom-file-upload input {
+    display: none;
 }
 
-/* ======== HEADER ======== */
-.header-dashboard {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.custom-file-upload span {
+    font-size: 14px;
+    color: #666;
 }
-
-.header-dashboard h2 {
-    margin: 0;
-}
-
-.btn-agregar {
-    background-color: #c7ffb2;
-    color: black;
-    padding: 8px 15px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    border: 1px solid black;
-}
-
-
-
-/* Estilos de la grilla */
-.lotes-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 15px;
-}
-
-/* Tarjetas de lotes */
-.lote-card {
-    padding: 15px;
-    background-color: #ccc;
-    border-radius: 10px;
-    width: 250px;
-    height: 160px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative; /* Evita que el contenido sobresalga */
-}
-
-/* Hace que todo el contenedor sea clickeable */
-.lote-card a.lote-card-link {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-/* Efecto hover */
-.lote-card:hover {
-    transform: scale(1.05);
-}
-
-/* Encabezado de cada tarjeta */
-.lote-header {
-    display: flex;
-    justify-content: space-between;
-    
-}
-
-.estado-lote {
-    font-size: 22px;
-    margin-right: 3px; /* Espaciado entre el estado y el nombre */
-}
-
-/* Botón de edición */
-.editar-lote {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 1.2em;
-    text-decoration: none;
-    color: black;
-    cursor: pointer;
-    z-index: 2;
-}
-
-/* Información dentro de la tarjeta */
-.lote-info {
-    margin-bottom: 20px;
-    margin-top: -10px;
-    margin-left: 9px;
-}
-
-/* Espacio para la información del lote */
-.lote-nombre {
-    font-size: 22px;
-    color: blue;
-    white-space: nowrap; /* Evita que el texto haga salto de línea */
-    overflow: hidden; /* Evita que el texto se desborde del contenedor */
-    text-overflow: ellipsis; /* Muestra "..." si el texto es muy largo */
-    flex-grow: 1; /* Permite que se expanda horizontalmente */
-    text-align: left;
-    margin-top: 3px; /* Alinea el texto a la izquierda */ /* No permite que el nombre se salga del contenedor */
-}
-
-/* Días restantes */
-.dias-restantes {
-    position: absolute;
-    bottom: 1px;
-    right: 1px;
-    font-size: 17px;
-    font-weight: bold;
-    color: gray;
-    padding: 4px 10px;
-}
-
-
-@media screen and (max-width: 768px) {
-    body {
-        overflow-y: auto; /* Habilita el scroll vertical */
-        margin: 0;
-        padding: 0;
-    }
-
-    /* Ajustar el contenedor principal */
-    .dashboard-container {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh; /* Ocupar toda la pantalla */
-        height: auto; /* Ajustarse al contenido */
-    }
-
-    /* Ajustar la barra lateral (SIDEBAR) */
-    .sidebar {
-        width: 100%;
-        height: auto; /* Se ajusta automáticamente */
-        max-height: 70vh; /* Limita su altura al 40% de la pantalla */
-        padding-bottom: 10px;
-        flex-direction: column;
-        align-items: center;
-        text-align: center; /* Evita espacios extra */
-    }
-
-    /* Reorganizar los botones en una sola fila */
-    .nav-menu {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        width: 100%;
-        margin-bottom: 5px; /* Espaciado mínimo */
-    }
-
-    .nav-btn {
-        width: auto;
-        padding: 10px 15px;
-        font-size: 16px;
-    }
-
-    /* Hacer que los filtros no ocupen demasiado espacio */
-    .filters {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 5px;
-        width: 100%;
-        margin-bottom: 5px; /* Reduce espacio sobrante */
-    }
-
-    .filters h4 {
-        width: 100%;
-        text-align: center;
-    }
-
-    /* Ajustar el contenido principal */
-    .main-content {
-        flex-grow: 1;
-        padding: 10px;
-        width: 100%;
-        overflow-y: auto; /* Permitir scroll en el contenido */
-        margin-top: 0; /* Elimina espacios arriba */
-    }
-
-    /* Ajustar la galería de lotes */
-    .lotes-grid {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-bottom: 10px; /* Ajustar espacio para mejor visualización */
-    }
-
-    .lote-card {
-        width: 90%;
-        max-width: 350px;
-    }
-
-    .lote-header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .lote-info {
-        text-align: center;
-    }
-
-    /* Ajustar el botón de salida */
-    .btn-salir {
-        position: static;
-        margin-top: 10px;
-        width: 90%;
-    }
-}
-
 
 
