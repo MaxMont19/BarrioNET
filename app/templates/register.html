@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 <body>
 
     <img src="{{ url_for('static', filename='img/LogoBarrioNet.png') }}" alt="Logo" class="logo-top-left">
-
 
     <div class="login-container">
         <div class="login-box">
@@ -19,31 +18,35 @@
                 {{ form.hidden_tag() }}
 
                 <label for="nombre">Nombre</label>
-                {{ form.nombre(class="input-field") }}
+                {{ form.nombre(class="input-field", required=True, autofocus=True) }}
 
                 <label for="apellido">Apellido</label>
-                {{ form.apellido(class="input-field") }}
+                {{ form.apellido(class="input-field", required=True) }}
 
                 <label for="username">Nombre de Usuario</label>
-                {{ form.username(class="input-field") }}
+                {{ form.username(class="input-field", required=True) }}
 
                 <label for="email">Correo Electrónico</label>
-                {{ form.email(class="input-field") }}
+                {{ form.email(class="input-field", required=True) }}
 
                 <label for="distrito">Distrito</label>
-                {{ form.distrito(class="input-field") }}
+                {{ form.distrito(class="input-field", required=True) }}
 
                 <label for="foto_perfil">Foto de Perfil</label>
                 <div class="custom-file-upload">
                     <input type="file" name="foto_perfil" id="foto_perfil" accept="image/*">
                     <span id="nombre_archivo">Ningún archivo seleccionado</span>
                 </div>
+                <img id="preview" src="#" alt="Vista previa" style="display:none; max-width: 100px;">
 
                 <label for="password">Contraseña</label>
-                {{ form.password(class="input-field") }}
+                <div class="password-container">
+                    {{ form.password(class="input-field", id="password", required=True) }}
+                    <button type="button" onclick="togglePassword()" class="show-password">👁</button>
+                </div>
 
                 <label for="confirm_password">Confirmar Contraseña</label>
-                {{ form.confirm_password(class="input-field") }}
+                {{ form.confirm_password(class="input-field", required=True) }}
 
                 <button type="submit" class="login-btn">Registrarse</button>
             </form>
