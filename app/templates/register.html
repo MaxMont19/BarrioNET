@@ -3,55 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Creación de Cuenta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet">
     <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 <body>
 
-    <img src="{{ url_for('static', filename='img/LogoBarrioNet.png') }}" alt="Logo" class="logo-top-left">
+    <div class="register-container">
+        <!-- Sección izquierda con el logo -->
+        <div class="left-section">
+            <img src="{{ url_for('static', filename='img/LogoBarrioNet.png') }}" alt="BarrioNet Logo" class="logo">
+        </div>
 
-    <div class="login-container">
-        <div class="login-box">
-            <h2>Registro</h2>
-            <form method="POST" enctype="multipart/form-data">
-                {{ form.hidden_tag() }}
+        <!-- Sección derecha con el formulario -->
+        <div class="right-section">
+            <div class="register-box">
+                <h2>Únete y hagamos de tu barrio un lugar mejor 😄!</h2>
 
-                <label for="nombre">Nombre</label>
-                {{ form.nombre(class="input-field", required=True, autofocus=True) }}
+                <form method="POST" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
 
-                <label for="apellido">Apellido</label>
-                {{ form.apellido(class="input-field", required=True) }}
+                    <div class="input-container">
+                        {{ form.nombre(class="input-field", placeholder="Nombre", required=True) }}
+                        {{ form.apellido(class="input-field", placeholder="Apellidos", required=True) }}
+                    
+                        {{ form.username(class="input-field", placeholder="Nombre de Usuario", required=True) }}
+                        {{ form.email(class="input-field", placeholder="Email", required=True) }}
+                    
+                        {{ form.distrito(class="input-field", placeholder="Distrito", required=True) }}
+                    
+                        <!-- Cargar Foto con icono -->
+                        <div class="file-upload">
+                            <label for="foto_perfil" class="file-label">Cargar Foto</label>
+                            <img src="{{ url_for('static', filename='img/Imagen.png') }}" alt="Subir Imagen" class="upload-icon">
+                            <input type="file" name="foto_perfil" id="foto_perfil" accept="image/*">
+                        </div>
+                    
+                        <div class="password-container">
+                            {{ form.password(class="input-field", placeholder="Contraseña", required=True) }}
+                            <img src="{{ url_for('static', filename='img/Eye.png') }}" class="eye-icon" onclick="togglePassword('password')">
+                        </div>
+                    
+                        <div class="password-container">
+                            {{ form.confirm_password(class="input-field", placeholder="Confirmar Contraseña", required=True) }}
+                            <img src="{{ url_for('static', filename='img/Eye.png') }}" class="eye-icon" onclick="togglePassword('confirm_password')">
+                        </div>
+                    </div>
+                    
 
-                <label for="username">Nombre de Usuario</label>
-                {{ form.username(class="input-field", required=True) }}
+                    <!-- Botón de registro -->
+                    <button type="submit" class="register-btn">Registrarme</button>
+                </form>
 
-                <label for="email">Correo Electrónico</label>
-                {{ form.email(class="input-field", required=True) }}
-
-                <label for="distrito">Distrito</label>
-                {{ form.distrito(class="input-field", required=True) }}
-
-                <label for="foto_perfil">Foto de Perfil</label>
-                <div class="custom-file-upload">
-                    <input type="file" name="foto_perfil" id="foto_perfil" accept="image/*">
-                    <span id="nombre_archivo">Ningún archivo seleccionado</span>
-                </div>
-                <img id="preview" src="#" alt="Vista previa" style="display:none; max-width: 100px;">
-
-                <label for="password">Contraseña</label>
-                <div class="password-container">
-                    {{ form.password(class="input-field", id="password", required=True) }}
-                    <button type="button" onclick="togglePassword()" class="show-password">👁</button>
-                </div>
-
-                <label for="confirm_password">Confirmar Contraseña</label>
-                {{ form.confirm_password(class="input-field", required=True) }}
-
-                <button type="submit" class="login-btn">Registrarse</button>
-            </form>
-
-            <p>¿Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Inicia sesión aquí</a></p>
+                <p>¿Ya tienes una cuenta? <a href="{{ url_for('auth.login') }}" class="register-link">Iniciar Sesión</a></p>
+            </div>
         </div>
     </div>
 

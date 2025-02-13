@@ -1,18 +1,11 @@
-// Vista previa de imagen
-document.getElementById('foto_perfil').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('preview').src = e.target.result;
-            document.getElementById('preview').style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
 // Mostrar/Ocultar contraseña
-function togglePassword() {
-    const passwordInput = document.getElementById("password");
-    passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
+function togglePassword(id) {
+    const input = document.getElementById(id);
+    input.type = (input.type === "password") ? "text" : "password";
 }
+
+// Mostrar el nombre de la imagen seleccionada
+document.getElementById('foto_perfil').addEventListener('change', function(event) {
+    const fileName = event.target.files[0] ? event.target.files[0].name : "Cargar Foto";
+    document.querySelector('.file-label').innerHTML = fileName + ' <img src="/static/img/Imagen.png" class="upload-icon">';
+});

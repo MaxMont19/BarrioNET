@@ -7,3 +7,4 @@ flask_wtf
 psycopg2
 wtforms
 werkzeug
+email-validator

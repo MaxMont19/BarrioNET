@@ -8,7 +8,7 @@ from flask import current_app
 from werkzeug.utils import secure_filename
 auth_bp = Blueprint('auth', __name__)
 
-UPLOAD_FOLDER = 'static/uploads'
+UPLOAD_FOLDER = os.path.join(current_app.root_path, 'static', 'uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
@@ -21,11 +21,14 @@ def register():
         # Manejo del archivo de imagen
         foto_perfil = request.files['foto_perfil']
         if foto_perfil and allowed_file(foto_perfil.filename):
-            filename = secure_filename(foto_perfil.filename)
-            filepath = os.path.join(UPLOAD_FOLDER, filename)
-            foto_perfil.save(filepath)
-        else:
-            filename = None  # Si no sube imagen, no se guarda nada
+               filename = secure_filename(foto_perfil.filename)
+               filepath = os.path.join(UPLOAD_FOLDER, filename)
+    
+        # Verificar si la carpeta de subida existe
+        if not os.path.exists(UPLOAD_FOLDER):
+               os.makedirs(UPLOAD_FOLDER)  # Crea la carpeta si no existe
+    
+        foto_perfil.save(filepath)
 
         # Guardar usuario en la BD
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
