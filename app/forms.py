@@ -25,6 +25,6 @@ class RegistroForm(FlaskForm):
             raise ValidationError('Ese correo electrónico ya está en uso.')
 
 class LoginForm(FlaskForm):
-    username = StringField('Nombre de Usuario', validators=[DataRequired()])
+    email = StringField('Correo Electrónico', validators=[DataRequired(), Email()])
     password = PasswordField('Contraseña', validators=[DataRequired()])
     submit = SubmitField('Iniciar Sesión')

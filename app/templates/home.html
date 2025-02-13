@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Bienvenido a BarrioNet</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-<h1>HOLA A TODOS</h1>
+
+    <div class="home-container">
+        <h1>Bienvenido, {{ current_user.nombre }} 👋</h1>
+        <p>¡Has iniciado sesión correctamente!</p>
+
+        <!-- Botón para cerrar sesión -->
+        <a href="{{ url_for('auth.logout') }}" class="logout-btn">Salir</a>
+    </div>
+
 </body>
 </html>
-
