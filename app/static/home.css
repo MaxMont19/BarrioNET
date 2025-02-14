@@ -1,18 +1,632 @@
-.logout-btn {
-    display: inline-block;
+html, body {
+    height: 100vh; /* Ajustar la altura de toda la pantalla */
+    overflow: hidden; /* Elimina el scroll global de la página */
+}
+
+
+/* ====== Reset y estilos generales ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* ====== Barra de navegación superior ====== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
     padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Reducir tamaño del logo */
+.logo-container img {
+    width: 140px; /* Ajusta el tamaño según lo necesites */
+    height: auto;
+}
+
+/* Anchar barra de búsqueda */
+.search-bar {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar input {
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: 60%; /* Ajusta el ancho */
+    max-width: 500px; /* Máximo tamaño en pantallas grandes */
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 25px;
+    height: 25px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+/* ====== Menú emergente ====== */
+.user-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.user-icon {
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    z-index: 1000;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+
+/* ====== Contenedor principal ====== */
+.main-container {
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: flex-start; /* Asegura que empiece desde arriba */
+    gap: 20px; /* Espaciado entre los elementos */
+    padding: 20px;
+}
+
+
+/* ====== Barra lateral izquierda ====== */
+.sidebar {
+    width: 270px;
+    height: 340px; /* Reducir el ancho para que no se extienda demasiado */
+    padding: 15px;
+    background: #ffffff; /* Color de fondo blanco para distinguirlo del fondo */
+    border-radius: 12px;
+    box-shadow: 0 5px 50px rgba(0, 0, 0, 0.2); /* Sombra ligera */
+}
+
+/* Sección del perfil del usuario */
+.user-profile {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #ddd; /* Línea separadora */
+}
+
+.profile-pic {
+    width: 55px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+}
+
+.user-info h3 {
     font-size: 16px;
     font-weight: bold;
-    color: white;
-    background-color: #d9534f; /* Rojo */
-    border: none;
-    border-radius: 5px;
+    margin: 0;
+}
+
+.user-info p {
+    font-size: 14px;
+    color: #666;
+    margin: 2px 0 0 0;
+}
+
+/* Menú de navegación */
+.sidebar-menu {
+    margin-top: 15px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
     text-decoration: none;
-    margin-top: 20px;
-    cursor: pointer;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-bottom: 8px;
     transition: background 0.3s ease;
 }
 
-.logout-btn:hover {
-    background-color: #c9302c;
+.sidebar-menu a img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+/* Efecto activo en el menú */
+.sidebar-menu a.active {
+    background-color: #e0f3e0;
+    color: #228b22; /* Verde oscuro */
+}
+
+/* Cambio de color al pasar el mouse */
+.sidebar-menu a:hover {
+    background-color: #d8f0d8;
+}
+
+
+/* ====== Sección de publicaciones ====== */
+.feed {
+    flex-grow: 1;
+    height: calc(100vh - 120px); /* Altura dinámica menos el navbar */
+    overflow-y: scroll; /* Activa el scroll solo dentro de la sección */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra las publicaciones */
+    gap: 15px; /* Espaciado entre publicaciones */
+    scrollbar-width: none; /* Oculta el scroll en Firefox */
+    -ms-overflow-style: none; /* Oculta el scroll en Internet Explorer */
+}
+
+/* Oculta el scroll en Chrome y Edge */
+.feed::-webkit-scrollbar {
+    display: none;
+}
+
+.post-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-box input {
+    flex-grow: 1;
+    margin-left: 10px;
+    border: none;
+    padding: 10px;
+}
+
+.post-options {
+    margin-left: 10px;
+}
+
+.post {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;  /* Ocupar todo el ancho disponible */
+    max-width: 600px; /* Ajusta el ancho máximo de las publicaciones */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.post-header img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.post-header h4 {
+    margin-left: 10px;
+}
+
+.post-img {
+    width: 100%; /* Se ajusta al ancho de la publicación */
+    max-height: 400px; /* Define un límite de altura */
+    border-radius: 8px;
+    object-fit: cover;
+    margin-top: 10px;
+}
+
+.post p {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #333;
+}
+
+.post strong {
+    display: block;
+    color: #228b22; /* Verde fuerte */
+    font-size: 14px;
+    margin-top: 10px; /* Separa el hashtag del contenido */
+}
+
+
+
+/* ====== Barra lateral derecha ====== */
+.activity-sidebar {
+    width: 270px;
+    height: 340px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 50px rgba(0, 0, 0, 0.2);
+}
+
+.activity {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.activity-icon {
+    width: 35px;  /* Tamaño de la imagen */
+    height: 35px;
+    margin-right: 10px;
+}
+
+.activity-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.bold-text {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+small {
+    font-size: 12px;
+    color: #777;
+}
+
+/* ====== Botón de Crear Publicación ====== */
+.create-post-btn {
+    background-color: #228b22;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.create-post-btn:hover {
+    background-color: #1b6d1b;
+}
+
+/* ======= Modal ======= */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 450px;
+    position: relative;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Título del modal */
+.modal-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Botón de cerrar */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* ======= Usuario en el Modal ======= */
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+}
+
+.user-name h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* ======= Campo de texto ======= */
+.modal-content textarea {
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* ======= Subida de Imagen ======= */
+.upload-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 2px dashed #ccc;
+    width: 100%;
+    height: 120px;
+    font-size: 14px;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    margin-bottom: 15px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+}
+
+.upload-section input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.upload-preview {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.upload-preview img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upload-section .file-input {
+    display: none;
+}
+
+.upload-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-text img {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 5px;
+}
+
+.upload-text p {
+    font-size: 14px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 3px;
+}
+
+.upload-text small {
+    font-size: 12px;
+    color: #777;
+}
+
+/* ======= Hashtags seleccionables ======= */
+.hashtags {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.hashtag-label {
+    display: flex;
+    align-items: center;
+    background-color: #ccc;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.hashtag-label input {
+    display: none;
+}
+
+.hashtag-label.active {
+    background-color: #228b22;
+}
+
+/* ======= Lightbox (Vista Emergente de Imágenes) ======= */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox img {
+    width: 80%;
+    max-height: 80vh;
+}
+
+.close-lightbox {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+/* ======= Ubicación ======= */
+.location-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.location-section input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.location-btn {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    padding: 5px 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* ======= Botón de Publicar ======= */
+.publish-btn {
+    background-color: #228b22;
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+}
+
+.publish-btn:hover {
+    background-color: #1b6d1b;
+}
+
+
+.map-modal {
+    width: 600px;
+    height: 500px;
+}
+
+#map {
+    width: 100%;
+    height: 380px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+
+/* Estilos para la previsualización de imágenes */
+#image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.preview-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.preview-img:hover {
+    transform: scale(1.1);
+}
+
+/* Lightbox para la vista de imágenes */
+#post-lightbox {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+#post-lightbox-image {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
+
+#post-lightbox:after {
+    content: "✖";
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
 }
