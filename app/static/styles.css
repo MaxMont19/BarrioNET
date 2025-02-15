@@ -1,87 +1,145 @@
-/* Establecer imagen de fondo */
-body {
-    background: url("../static/img/FondoBarrioNet.webp") no-repeat center center fixed;
-    background-size: cover;
-    font-family: Arial, sans-serif;
+/* ====== Reset y Estilos Generales ====== */
+* {
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-/* Contenedor principal */
+/* ====== Contenedor Principal ====== */
 .login-container {
     display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* ====== Sección Izquierda (Logo) ====== */
+.left-section {
+    background-color: #3f4a3c; 
+    width: 80%;
+    display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
-/* Caja del formulario */
-.login-box {
-    background: rgba(255, 255, 255, 0.384);
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 350px;
+.logo {
+    max-width: 70%;
+    height: auto;
 }
 
-/* LOGO EN LA PARTE SUPERIOR IZQUIERDA */
-.logo-top-left {
-    position: absolute;
-    top: 10px;  /* Ajusta la distancia desde la parte superior */
-    right: 20px; /* Ajusta la distancia desde la izquierda */
-    width: 350px; /* Ajusta el tamaño del logo */
-    height: auto; /* Mantiene la proporción */
-    z-index: 10; /* Asegura que esté por encima del fondo */
+/* ====== Sección Derecha (Formulario) ====== */
+.right-section {
+    background-color: #f9f7f3; 
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
 }
 
+/* Contenedor del formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%; 
+}
 
-/* Campos de entrada */
-.input-field {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
+/* Icono en la parte superior del formulario */
+.icon-img {
+    width: 200px;
+    height: auto;
     margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
 }
 
-/* Botón de inicio de sesión */
+/* ====== Formulario ====== */
+h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: 55%; 
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    font-size: 16px;
+    text-align: left; 
+    padding-right: 10px; 
+}
+
+/* ====== Asegurar que el placeholder no sea opaco ====== */
+.input-field::placeholder {
+    color: #aaa; 
+    opacity: 1; 
+}
+
+/* ====== Botón de Inicio de Sesión ====== */
 .login-btn {
-    background-color: #ff6b6b;
+    background-color: #2d7f55;
     color: white;
     border: none;
     padding: 10px;
-    width: 100%;
+    width: 25%; 
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    text-align: center; 
 }
 
 .login-btn:hover {
-    background-color: #ff5252;
+    background-color: #1e5a3a;
 }
 
-/* Estilo para el botón de archivo */
-.custom-file-upload {
-    background: #eee;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    margin-bottom: 10px;
+/* ====== Enlace de Registro ====== */
+p {
+    font-size: 16px;
+    margin-top: 15px;
 }
 
-.custom-file-upload input {
-    display: none;
+.register-link {
+    color: #2d7f55;
+    text-decoration: none;
+    font-weight: bold;
 }
 
-.custom-file-upload span {
-    font-size: 14px;
-    color: #666;
+.register-link:hover {
+    text-decoration: underline;
+}
+
+
+/* ====== Media Queries (Vista Móvil) ====== */
+@media screen and (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+
+    .left-section {
+        width: 100%;
+        height: 40vh;
+    }
+
+    .right-section {
+        width: 100%;
+        height: 60vh;
+        padding: 20px;
+    }
+
+    .logo {
+        max-width: 50%;
+    }
+
+    .input-field {
+        width: 80%;
+    }
+
+    .login-btn {
+        width: 80%;
+    }
 }
 
 
