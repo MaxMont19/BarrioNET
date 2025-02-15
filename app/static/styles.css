@@ -15,7 +15,7 @@
 
 /* ====== Sección Izquierda (Logo) ====== */
 .left-section {
-    background-color: #3f4a3c;  /* Color de fondo */
+    background-color: #3f4a3c; 
     width: 80%;
     display: flex;
     justify-content: center;
@@ -29,7 +29,7 @@
 
 /* ====== Sección Derecha (Formulario) ====== */
 .right-section {
-    background-color: #f9f7f3;  /* Color claro */
+    background-color: #f9f7f3; 
     width: 45%;
     display: flex;
     flex-direction: column;
@@ -42,8 +42,8 @@
 form {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centrar elementos dentro del formulario */
-    width: 100%; /* Asegurar que los inputs se alineen correctamente */
+    align-items: center; 
+    width: 100%; 
 }
 
 /* Icono en la parte superior del formulario */
@@ -60,20 +60,20 @@ h2 {
 }
 
 .input-field {
-    width: 55%; /* Ajustar el ancho */
+    width: 55%; 
     padding: 12px;
     margin: 10px 0;
     border: 2px solid #ddd;
     border-radius: 15px;
     font-size: 16px;
-    text-align: left; /* Alinear el texto del placeholder a la derecha */
-    padding-right: 10px; /* Espacio entre el borde derecho y el texto */
+    text-align: left; 
+    padding-right: 10px; 
 }
 
 /* ====== Asegurar que el placeholder no sea opaco ====== */
 .input-field::placeholder {
-    color: #aaa; /* Color gris claro para que se vea elegante */
-    opacity: 1; /* Asegurar que el placeholder sea visible */
+    color: #aaa; 
+    opacity: 1; 
 }
 
 /* ====== Botón de Inicio de Sesión ====== */
@@ -82,13 +82,13 @@ h2 {
     color: white;
     border: none;
     padding: 10px;
-    width: 25%; /* Asegura que tenga el mismo ancho que los inputs */
+    width: 25%; 
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
     transition: background 0.3s ease;
-    text-align: center; /* Centrar el texto */
+    text-align: center; 
 }
 
 .login-btn:hover {
