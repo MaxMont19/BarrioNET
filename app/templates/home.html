@@ -1,13 +1,282 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-<h1>HOLA A TODOS</h1>
-</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BarrioNet - Home</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='home.css') }}"
+    />
+    <script src="{{ url_for('static', filename='home.js') }}" defer></script>
+  </head>
+  <body>
+    <!-- Barra de navegación superior -->
+    <nav class="navbar">
+      <div class="logo-container">
+        <img
+          src="{{ url_for('static', filename='img/LogoBarrioNet.png') }}"
+          alt="BarrioNet Logo"
+          class="logo"
+        />
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar en BarrioNet..." />
+      </div>
+      <div class="icons">
+        <img
+          src="{{ url_for('static', filename='img/lucide_bell.png') }}"
+          alt="Notificaciones"
+          class="icon"
+        />
 
+        <!-- Icono de usuario con menú emergente -->
+        <div class="user-menu">
+          <img
+            src="{{ url_for('static', filename='img/lucide_user.png') }}"
+            alt="Usuario"
+            class="icon user-icon"
+          />
+          <div class="dropdown-menu">
+            <a href="#">Configuración</a>
+            <a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contenedor principal -->
+    <div class="main-container">
+      <!-- Barra lateral izquierda -->
+      <aside class="sidebar">
+        <div class="user-profile">
+          <img
+            src="{{ url_for('static', filename='uploads/' + current_user.foto_perfil) }}"
+            alt="Foto de perfil"
+            class="profile-pic"
+          />
+          <div class="user-info">
+            <h3>{{ current_user.nombre }} {{ current_user.apellido }}</h3>
+            <p>{{ current_user.distrito }}</p>
+          </div>
+        </div>
+        <nav class="sidebar-menu">
+          <a
+            href="{{ url_for('home.home') }}"
+            class="{% if request.path == url_for('home.home') %}active{% endif %}"
+          >
+            <img
+              src="{{ url_for('static', filename='img/si_home-line.png') }}"
+              class="icon-nav"
+            />
+            Inicio
+          </a>
+          <a
+            href="{{ url_for('home.mapa') }}"
+            class="{% if request.path == url_for('home.mapa') %}active{% endif %}"
+          >
+            <img
+              src="{{ url_for('static', filename='img/lucide_map-pin.png') }}"
+              class="icon-nav"
+            />
+            Mapa
+          </a>
+          <a
+            href="{{ url_for('home.ecopuntos') }}"
+            class="{% if request.path == url_for('home.ecopuntos') %}active{% endif %}"
+          >
+            <img
+              src="{{ url_for('static', filename='img/lucide_award.png') }}"
+              class="icon-nav"
+            />
+            EcoPuntos
+          </a>
+        </nav>
+
+        <!-- Botón para abrir el modal -->
+        <button class="create-post-btn" onclick="openModal()">
+          Crear publicación
+        </button>
+      </aside>
+
+      <!-- Sección de publicaciones -->
+      <section class="feed">
+        {% for publicacion in publicaciones %}
+        <div class="post">
+          <div class="post-header">
+            <img
+              src="{{ url_for('static', filename='uploads/' + publicacion.usuario.foto_perfil) }}"
+              alt="Foto de perfil"
+            />
+            <div>
+              <h4>
+                {{ publicacion.usuario.nombre }} {{ publicacion.usuario.apellido
+                }}
+              </h4>
+              <small
+                >{{ publicacion.created_at.strftime('%d/%m/%Y %H:%M') }}</small
+              >
+            </div>
+          </div>
+          <p>{{ publicacion.contenido }}</p>
+
+          <!-- Si hay imágenes, mostrarlas -->
+          {% if publicacion.imagen %}
+          <div class="post-images-container">
+            {% for imagen in publicacion.imagen.split(',') %}
+            <div class="image-wrapper">
+              <img
+                src="{{ url_for('static', filename='uploads/' + imagen.strip()) }}"
+                class="post-img"
+                onclick="openPostLightbox(this.src)"
+              />
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <p><strong>#{{ publicacion.hashtag }}</strong></p>
+        </div>
+        {% else %}
+        <p>No hay publicaciones aún.</p>
+        {% endfor %}
+      </section>
+
+      <!-- Lightbox para mostrar imágenes en grande -->
+      <div id="post-lightbox" class="lightbox" onclick="closePostLightbox()">
+        <img id="post-lightbox-image" class="lightbox-img" />
+      </div>
+
+      <!-- Modal para la creación de publicaciones -->
+      <div id="postModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <h3 class="modal-title">Crear publicación</h3>
+
+          <!-- Perfil del usuario -->
+          <div class="post-header">
+            <img
+              src="{{ url_for('static', filename='uploads/' + current_user.foto_perfil) }}"
+              alt="Foto de perfil"
+              class="profile-pic"
+            />
+            <div class="user-name">
+              <h4>{{ current_user.nombre }} {{ current_user.apellido }}</h4>
+            </div>
+          </div>
+
+          <!-- Formulario -->
+          <form
+            action="{{ url_for('home.publicar') }}"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <!-- Caja de texto -->
+            <textarea
+              name="contenido"
+              placeholder="¿Hay algo que quieras compartir o reportar?"
+              required
+            ></textarea>
+
+            <!-- Sección para subir imágenes -->
+            <label class="upload-section" id="upload-label">
+              <input
+                type="file"
+                name="imagenes"
+                accept="image/*"
+                multiple
+                id="image-input"
+              />
+              <div class="upload-preview" id="image-preview">
+                <p>Toca para agregar una foto</p>
+              </div>
+            </label>
+
+            <!-- Lightbox para previsualización en el modal -->
+            <div id="modal-lightbox" class="lightbox">
+              <span class="close-lightbox" onclick="closeModalLightbox()"
+                >&times;</span
+              >
+              <img id="modal-lightbox-image" src="" alt="Vista previa" />
+            </div>
+
+            <!-- Selección de hashtags -->
+            <div class="hashtags">
+              <label class="hashtag-label" id="reciclaje-btn">
+                <input type="radio" name="hashtag" value="Reciclaje" />
+                <span>#Reciclaje</span>
+              </label>
+              <label class="hashtag-label" id="reporte-btn">
+                <input type="radio" name="hashtag" value="Reporte" />
+                <span>#Reporte</span>
+              </label>
+            </div>
+
+            <!-- Sección de ubicación -->
+            <div class="location-section">
+              <input
+                type="text"
+                id="location-input"
+                name="ubicacion"
+                placeholder="Ubicación"
+                readonly
+              />
+              <button type="button" class="location-btn" onclick="openMap()">
+                📍
+              </button>
+            </div>
+
+            <!-- Botón de Publicar -->
+            <button type="submit" class="publish-btn">Publicar</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Modal del mapa -->
+      <div id="mapModal" class="modal">
+        <div class="modal-content map-modal">
+          <span class="close" onclick="closeMapModal()">&times;</span>
+          <h3>Selecciona una ubicación</h3>
+          <div id="map"></div>
+          <button class="publish-btn" onclick="confirmLocation()">
+            Confirmar Ubicación
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra lateral derecha con actividad reciente -->
+      <aside class="activity-sidebar">
+        <h3>Actividad Reciente</h3>
+
+        <!-- Primera actividad -->
+        <div class="activity">
+          <img
+            src="{{ url_for('static', filename='img/Group 17.png') }}"
+            class="activity-icon"
+            alt="Puntos"
+          />
+          <div class="activity-text">
+            <p class="bold-text">Ganaste 50 puntos</p>
+            <small>Hace 1 hora</small>
+          </div>
+        </div>
+
+        <!-- Segunda actividad -->
+        <div class="activity">
+          <img
+            src="{{ url_for('static', filename='img/Group 19.png') }}"
+            class="activity-icon"
+            alt="Reporte"
+          />
+          <div class="activity-text">
+            <p class="bold-text">Nuevo Reporte Creado</p>
+            <small>Hace 3 días</small>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  </body>
+</html>

@@ -1,5 +1,14 @@
 from app import db
 from flask_login import UserMixin
+from sqlalchemy import or_
+from datetime import datetime
+
+# Modelo de Amigos
+class Amigo(db.Model):
+    __tablename__ = 'amigos'
+    user1_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    user2_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    status = db.Column(db.String(10), nullable=False)
 
 # Modelo de Usuario
 class Usuario(db.Model, UserMixin):
@@ -18,18 +27,15 @@ class Usuario(db.Model, UserMixin):
     mensajes_enviados = db.relationship('Mensaje', foreign_keys='Mensaje.emisor_id', backref='emisor', lazy=True)
     mensajes_recibidos = db.relationship('Mensaje', foreign_keys='Mensaje.receptor_id', backref='receptor', lazy=True)
     publicaciones = db.relationship('Publicacion', backref='usuario', lazy=True)
-    reportes = db.relationship('Reporte', backref='usuario', lazy=True)
-    amigos = db.relationship('Amigo', 
-        primaryjoin="or_(Usuario.id == Amigo.user1_id, Usuario.id == Amigo.user2_id)", 
-        backref='usuario', lazy=True)
-    ecopuntos = db.relationship('Ecopunto', backref='usuario', lazy=True)
+    
+    amigos = db.relationship(
+        "Amigo",
+        primaryjoin=or_(id == Amigo.user1_id, id == Amigo.user2_id),
+        backref="usuario",
+        lazy=True
+    )
 
-# Modelo de Amigos
-class Amigo(db.Model):
-    __tablename__ = 'amigos'
-    user1_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    user2_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    status = db.Column(db.String(10), nullable=False)
+    ecopuntos = db.relationship('Ecopunto', backref='usuario', lazy=True)
 
 # Modelo de Mensajes
 class Mensaje(db.Model):
@@ -40,14 +46,17 @@ class Mensaje(db.Model):
     mensaje = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
 
-# Modelo de Reportes
-class Reporte(db.Model):
-    __tablename__ = 'reportes'
+# Modelo de Publicaciones (incluye reportes y reciclajes)
+class Publicacion(db.Model):
+    __tablename__ = 'publicaciones'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    descripcion = db.Column(db.Text, nullable=False)
-    ubicacion = db.Column(db.Text)  # Geography data puede manejarse como text o PostGIS
-    created_at = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
+    contenido = db.Column(db.Text, nullable=False)
+    imagen = db.Column(db.String(255), nullable=True)  # Ruta de la imagen
+    hashtag = db.Column(db.String(20), nullable=False)  # Reciclaje o Reporte
+    ubicacion = db.Column(db.String(255), nullable=True)  # Dirección exacta
+    descripcion = db.Column(db.Text, nullable=True)  # Información adicional en caso de reporte
+    created_at = db.Column(db.TIMESTAMP, default=datetime.utcnow)
 
 # Modelo de Ecopuntos
 class Ecopunto(db.Model):
@@ -57,18 +66,6 @@ class Ecopunto(db.Model):
     tipo = db.Column(db.String(20), nullable=False)
     puntos = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
-
-# Modelo de Publicaciones
-class Publicacion(db.Model):
-    __tablename__ = 'publicaciones'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    contenido = db.Column(db.Text, nullable=False)
-    imagen = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
-
-    # Relación con hashtags
-    hashtags = db.relationship('PublicacionHashtag', backref='publicacion', lazy=True)
 
 # Modelo de Hashtags
 class Hashtag(db.Model):

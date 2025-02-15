@@ -8,26 +8,33 @@
 </head>
 <body>
 
-    <img src="{{ url_for('static', filename='img/LogoBarrioNet.png') }}" alt="Logo" class="logo-top-left">
-
     <div class="login-container">
-        <div class="login-box">
+        <!-- Sección izquierda con el logo -->
+        <div class="left-section">
+            <img src="{{ url_for('static', filename='img/LogoBarrioNet.png') }}" alt="BarrioNet Logo" class="logo">
+        </div>
+
+        <!-- Sección derecha con el formulario -->
+        <div class="right-section">
+            <img src="{{ url_for('static', filename='img/tempImage4IyDkY.png') }}" alt="Icono reciclaje" class="icon-img">
             <h2>Iniciar Sesión</h2>
             <form method="POST">
                 {{ form.hidden_tag() }}
 
-                <label for="username">Correo Electrónico</label>
-                {{ form.username(class="input-field", placeholder="example@email.com") }}
+                <label for="email"></label>
+                {{ form.email(class="input-field", placeholder="Email") }}
 
-                <label for="password">Contraseña</label>
-                {{ form.password(class="input-field", placeholder="********") }}
+                <label for="password"></label>
+                {{ form.password(class="input-field", placeholder="Contraseña") }}
 
                 <button type="submit" class="login-btn">Ingresar</button>
             </form>
 
-            <p>¿No tienes cuenta? <a href="{{ url_for('auth.register') }}">Regístrate aquí</a></p>
+            <p>¿No tiene una cuenta? <a href="{{ url_for('auth.register') }}" class="register-link">Crear Cuenta</a></p>
         </div>
     </div>
 
 </body>
 </html>
+
+

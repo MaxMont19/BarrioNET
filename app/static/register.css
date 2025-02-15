@@ -1,0 +1,193 @@
+/* ====== Reset y Estilos Generales ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* ====== Contenedor Principal ====== */
+.register-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* ====== Sección Izquierda (Logo) ====== */
+.left-section {
+    background-color: #3f4a3c;  
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    max-width: 70%;
+    height: auto;
+}
+
+/* ====== Sección Derecha (Formulario) ====== */
+.right-section {
+    background-color: #f9f7f3; 
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+/* Contenedor del formulario */
+.register-box {
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+}
+
+h2 {
+    font-family: 'Yeon Sung', serif;
+    font-size: 30px; 
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* ====== Diseño de los inputs en 2 columnas ====== */
+.input-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+.input-field {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+/* Contenedor del botón de carga de foto */
+.file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    font-size: 16px;
+    background: white;
+    cursor: pointer;
+    color: #555; 
+}
+
+/* Asegurar que el texto dentro del botón sea igual al de los inputs */
+.file-label {
+    font-size: 16px;
+    color: #888; 
+}
+
+/* Ocultar el input de tipo file */
+#foto_perfil {
+    display: none;
+}
+
+/* Icono dentro del botón */
+.upload-icon {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    margin-left: auto; 
+}
+
+/* Ojo para las contraseñas */
+.password-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 15px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+
+
+/* ====== Botón de registro ====== */
+.register-btn {
+    background-color: #2d7f55;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 30%; 
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    text-align: center;
+}
+
+.register-btn:hover {
+    background-color: #1e5a3a;
+}
+
+/* ====== Link de iniciar sesión ====== */
+p {
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+.register-link {
+    color: #2d7f55;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+/* ====== Media Queries para móvil ====== */
+@media screen and (max-width: 768px) {
+    .register-container {
+        flex-direction: column;
+    }
+
+    .left-section {
+        width: 100%;
+        height: 40vh;
+    }
+
+    .right-section {
+        width: 100%;
+        height: 60vh;
+        padding: 20px;
+    }
+
+    .logo {
+        max-width: 50%;
+    }
+
+    .input-container {
+        grid-template-columns: 1fr; 
+    }
+
+    .register-box {
+        width: 90%;
+    }
+
+    .register-btn {
+        width: 100%;
+    }
+}
